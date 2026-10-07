@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Join my room · Split It!</title>
+	<meta name="description" content="A friend invites you to play Split It! together.">
+	<meta name="robots" content="noindex">
+	<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+	<main>
+		<div class="hero">
+			<a class="logo" href="../">Split It!</a>
+			<p class="tagline" id="title">A friend invites you to play</p>
+		</div>
+
+		<div class="card" style="text-align: center">
+			<p style="margin: 0" class="muted">Room code</p>
+			<div class="code" id="code">-----</div>
+			<p>
+				<a class="button blue" id="open" href="#">Open in Split It!</a>
+			</p>
+			<p class="muted" id="manual">Or open Split It!, go to Online, type the code and tap Join.</p>
+		</div>
+
+		<div class="card" style="text-align: center" id="get">
+			<p style="margin-top: 0">Don't have the game yet?</p>
+			<a class="button green" href="https://play.google.com/store/apps/details?id=games.and.splitit">Get it on Google Play</a>
+		</div>
+	</main>
+	<footer>
+		<a href="../privacy/">Privacy policy</a>
+		<p>© 2026 and.games</p>
+	</footer>
+
+	<script>
+		// The link carries the room code: ?r=ABCDE (what the game shares), or ?ABCDE, or #ABCDE.
+		var params = new URLSearchParams(location.search);
+		var raw = params.get("r") || location.search.replace(/^\?/, "").split("&")[0] || location.hash.replace(/^#/, "");
+		var code = (raw || "").toUpperCase().replace(/[^A-Z]/g, "").slice(0, 5);
+		var android = /Android/i.test(navigator.userAgent);
+		var open = document.getElementById("open");
+
+		if (code.length === 5) {
+			document.getElementById("code").textContent = code;
+			// On Android an intent link opens the game, or comes back here when it isn't installed.
+			var back = location.origin + location.pathname + "?r=" + code + "&noapp=1";
+			var appLink = android
+				? "intent://room/" + code + "#Intent;scheme=splitit;package=games.and.splitit;S.browser_fallback_url=" + encodeURIComponent(back) + ";end"
+				: "splitit://room/" + code;
+			open.href = appLink;
+			if (params.get("noapp") === "1") {
+				document.getElementById("title").textContent = "Install the game, then come back to this link";
+			} else if (android) {
+				location.href = appLink;
+			}
+		} else {
+			document.getElementById("title").textContent = "This invite has no room code";
+			open.style.display = "none";
+			document.getElementById("manual").textContent = "Ask your friend for the 5-letter code, then open Split It!, go to Online, type it and tap Join.";
+		}
+	</script>
+</body>
+</html>
