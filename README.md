@@ -4,6 +4,7 @@ The public pages of Split It!, served by GitHub Pages at https://and-games-studi
 
 - `index.html`: home page.
 - `privacy/`: privacy policy (linked from the Play Store listing and the OAuth consent screen).
+- `terms/`: terms of service (the link Google Play asks traders for, one per app).
 - `delete/`: how to have an account and its data deleted (Google Play's account deletion requirement).
 - `room/`: invite links shared from the game (`room/?r=ABCDE`). On Android it opens the game in that room through an intent link, or offers the Play Store when the game isn't installed.
 
