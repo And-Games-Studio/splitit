@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Get Split It!</title>
+	<meta name="description" content="Split It! Bubble Arcade is free on the App Store and Google Play.">
+	<meta name="robots" content="noindex">
+	<link rel="stylesheet" href="../style.css">
+	<script>
+		// One link for both stores, for bios and posts: a phone goes straight to its own store, a computer
+		// sees both. Installs from Instagram's and TikTok's in-app browsers are tagged for Play's acquisition report.
+		var ua = navigator.userAgent;
+		var from = /Instagram/i.test(ua) ? "instagram"
+			: /musical_ly|TikTok|BytedanceWebview/i.test(ua) ? "tiktok"
+			: /FBAN|FBAV/i.test(ua) ? "facebook"
+			: (new URLSearchParams(location.search).get("from") || "").replace(/[^a-z0-9_-]/gi, "");
+		var play = "https://play.google.com/store/apps/details?id=games.and.splitit"
+			+ (from ? "&referrer=" + encodeURIComponent("utm_source=" + from + "&utm_medium=link") : "");
+		var appStore = "https://apps.apple.com/app/id6829660923";
+		var android = /Android/i.test(ua);
+		// iPads ask for the desktop site, so they read as a Mac with a touch screen.
+		var apple = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
+		if (android) location.replace(play);
+		else if (apple) location.replace(appStore);
+	</script>
+</head>
+<body>
+	<main>
+		<div class="hero">
+			<a class="logo" href="../">Split It!</a>
+			<p class="tagline">Free on iPhone and Android</p>
+		</div>
+
+		<div class="card" style="text-align: center">
+			<p style="margin-top: 0">Fire your harpoon and split every bubble, alone or online with up to four friends.</p>
+			<a class="button" id="play" href="https://play.google.com/store/apps/details?id=games.and.splitit">Get it on Google Play</a>
+			<a class="button blue" id="appstore" href="https://apps.apple.com/app/id6829660923">Download on the App Store</a>
+		</div>
+	</main>
+	<footer>
+		<a href="../privacy/">Privacy policy</a>
+		<a href="../terms/">Terms of service</a>
+		<p>© 2026 And Games</p>
+	</footer>
+
+	<script>
+		// If the redirect is blocked, the buttons still lead to this phone's store, tagged like it.
+		document.getElementById("play").href = play;
+		if (android) document.getElementById("appstore").style.display = "none";
+		if (apple) document.getElementById("play").style.display = "none";
+	</script>
+</body>
+</html>
